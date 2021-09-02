@@ -9,6 +9,22 @@ public class Contact {
 	String phoneNumber;
 	String email;
 	
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getLastName() {
+		return LastName;
+	}
+
+	public void setLastName(String lastName) {
+		LastName = lastName;
+	}
+
 	public void addContact(String firstName, String LastName, String city, String state, String zipcode, String phoneNumber, String email) {
 		this.firstName = firstName;
 		this.LastName = LastName;
