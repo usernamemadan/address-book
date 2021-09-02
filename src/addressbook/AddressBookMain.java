@@ -21,28 +21,36 @@ public class AddressBookMain {
 			
 			switch(choice){
 			case 1:
-					Contact newContact =  createContact();
-					contactList.add(newContact);
-					break;
+				Contact newContact =  createContact();
+				contactList.add(newContact);
+				break;
 			case 2:
-					System.out.println("enter the first name of the contact to edit");
-					sc.nextLine();
-					String name=sc.nextLine();
-					for(Contact contact: contactList){
-						if((contact.getFirstName()).equals(name)) {
-							editContact(contact);
-							break;
-						}
+				System.out.println("enter the first name of the contact to edit");
+				sc.nextLine();
+				String name=sc.nextLine();
+				for(Contact contact: contactList){
+					if((contact.getFirstName()).equals(name)) {
+						editContact(contact);
+						break;						
 					}
-					break;
+				}
+				break;
 			case 3:
-				
-					break;
-			case 4:
-					for(Contact contact: contactList){
-						contact.print();
+				System.out.println("enter the first name of the contact to delete");
+				sc.nextLine();
+				String name1=sc.nextLine();
+				for(Contact contact: contactList){
+					if((contact.getFirstName()).equals(name1)) {
+						contactList.remove(contact);
+						break;
 					}
-					break;
+				}
+				break;
+			case 4:
+				for(Contact contact: contactList){
+					contact.print();
+				}
+				break;
 			case 5:
 					break;
 			
@@ -107,5 +115,4 @@ public class AddressBookMain {
 		contact.phoneNumber = phoneNumber;
 		contact.email = email;
 	}
-	
 }
