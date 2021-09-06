@@ -1,5 +1,7 @@
 package addressbook;
-
+/*
+contact class stores the contact information of a person
+*/
 public class Contact {
 	String firstName;
 	String LastName;
@@ -35,10 +37,11 @@ public class Contact {
 		this.email = email;
 	}
 	
-	public void print() {
-		System.out.println("firstName=" + firstName + ", LastName=" + LastName + ", city=" + city + ", state=" + state
-				+ ", zipcode=" + zipcode + ", phoneNumber=" + phoneNumber + ", email=" + email );
+	
+	@Override
+	public String toString() {
+		return "Contact [firstName=" + firstName + ", LastName=" + LastName + ", city=" + city + ", state=" + state
+				+ ", zipcode=" + zipcode + ", phoneNumber=" + phoneNumber + ", email=" + email + "]";
 	}
 
-	
 }
