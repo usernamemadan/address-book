@@ -17,10 +17,11 @@ public class AddressBookMain {
 		System.out.println("welcome to address book program");
 		
 		Set<Contact> contactList = null;
+		AddressBook addressBook = new AddressBook();
 		Map< String,Set<Contact> > addressBookList = new HashMap<String,Set<Contact>>();
 		
 		do {
-			contactList = selectAddressBook(addressBookList);
+			contactList = addressBook.selectAddressBook(addressBookList);
 		}while(contactList == null);
 		
 		int choice=0;
@@ -33,9 +34,9 @@ public class AddressBookMain {
 			
 			switch(choice){
 			case 1:
-				Contact newContact =  createContact();
-				contactList.add(newContact);
+				createContact(contactList);
 				break;
+				
 			case 2:
 				System.out.println("enter the first name of the contact to edit");
 				sc.nextLine();
@@ -61,54 +62,32 @@ public class AddressBookMain {
 				break;
 				
 			case 4:
-				for(Contact contact: contactList){
-					System.out.println(contact);
-				}
+				printContacts(contactList);
 				break;
+				
 			case 5:
 				do {
-					contactList = selectAddressBook(addressBookList);
+					contactList = addressBook.selectAddressBook(addressBookList);
 				}while(contactList == null);
 				break;
+				
 			case 6:
 				break;
 			}
 		}
 	}
-
-	/*
-	function to select or create a addressbook
-	*/
-	public static Set<Contact> selectAddressBook(Map<String,Set<Contact>> addressBookList) {
-		System.out.println("1.Create address book \n2.Choose address book");
-		Scanner sc = new Scanner(System.in);
-		int choice = sc.nextInt();
-		sc.nextLine();
-		String name;
-		if(choice == 1) {
-			System.out.println("Enter the name of new address book");
-			name = sc.nextLine();
-			Set<Contact> contactList1 = new HashSet<Contact>();
-			addressBookList.put(name, contactList1);
-		}
-		else if(choice == 2) {
-	            for (String bookname : addressBookList.keySet()) {
-	                System.out.println(bookname);
-	            }
-	            System.out.println("Enter the name of address book from the given list");
-	            name = sc.nextLine();
-		}
-		else {
-			System.out.println("invalid choice. try again");
-			return null;
-		}
-		return addressBookList.get(name);
-	}
-	
 	/*
 	function to create a new contact
 	*/
-	public static Contact createContact() {	
+	public static void printContacts(Set<Contact> contactList) {
+		for(Contact contact: contactList){
+			System.out.println(contact);
+		}
+	}
+	/*
+	function to create a new contact
+	*/
+	public static void createContact(Set<Contact> contactList) {	
 		String firstName;
 		String LastName;
 		String city;
@@ -134,8 +113,14 @@ public class AddressBookMain {
 		email = sc.nextLine();
 		
 		Contact contact = new Contact();
+		contactList.forEach(c -> {
+			if(c.getFirstName().equals(firstName))
+				System.out.println("contact already exists");
+			});
+		
 		contact.addContact(firstName, LastName, city, state, zipcode, phoneNumber, email);
-		return contact;
+		Boolean isAdded = contactList.add(contact);
+
 		
 	}
 	/*
@@ -150,15 +135,15 @@ public class AddressBookMain {
 		
 		Scanner sc = new Scanner(System.in);
 
-		System.out.println("enter the city");
+		System.out.println("enter the updated city");
 		city = sc.nextLine();
-		System.out.println("enter the state");
+		System.out.println("enter the updated state");
 		state = sc.nextLine();
-		System.out.println("enter the zipcode");
+		System.out.println("enter the updated zipcode");
 		zipcode = sc.nextLine();
-		System.out.println("enter the phone number");
+		System.out.println("enter the updated number");
 		phoneNumber = sc.nextLine();
-		System.out.println("enter the email");
+		System.out.println("enter the updated email");
 		email = sc.nextLine();
 		
 		contact.city = city;
