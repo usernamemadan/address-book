@@ -1,10 +1,12 @@
 package addressbook;
 
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /*
  AddressBookMain class manages selecting addressbook
@@ -12,7 +14,7 @@ import java.util.Set;
 */
 
 public class AddressBookMain {
-
+	
 	public static void main(String[] args) {
 		System.out.println("welcome to address book program");
 
@@ -172,26 +174,33 @@ public class AddressBookMain {
 	}
 	
 	public static void searchByCity(Map<String, Set<Contact>> addressBookList) {
+		List personListByCity = new ArrayList<>();
 		Scanner sc = new Scanner(System.in);
 		System.out.println("Enter the city name to be searched");
 		String city = sc.nextLine();
 		System.out.println("list of person from city");
 		for (String bookname : addressBookList.keySet()) {
 			Set<Contact> contactList = addressBookList.get(bookname);
-			contactList.stream().filter(c -> c.city.equals(city)).forEach(c -> System.out.println(c.getFirstName()));
+			personListByCity = contactList.stream().filter(c -> c.city.equals(city)).collect(Collectors.toList());
+		}
+		for (Object object : personListByCity) {
+			System.out.println(object);
 		}
 	}
 
 	public static void searchByState(Map<String, Set<Contact>> addressBookList) {
+		List personListByState = new ArrayList<>();
 		Scanner sc = new Scanner(System.in);
 		System.out.println("Enter the state name to be searched");
 		String state = sc.nextLine();
 		System.out.println("list of person from state");
 		for (String bookname : addressBookList.keySet()) {
 			Set<Contact> contactList = addressBookList.get(bookname);
-			contactList.stream().filter(c -> c.city.equals(state)).forEach(c -> System.out.println(c.getFirstName()));
+			personListByState = contactList.stream().filter(c -> c.city.equals(state)).collect(Collectors.toList());
 		}
-
+		for (Object object : personListByState) {
+			System.out.println(object);
+		}
 	}
 
 }
