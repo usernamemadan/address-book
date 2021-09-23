@@ -76,6 +76,9 @@ public class AddressBookMain {
 			case 6:
 				getInput(addressBookList);
 				break;
+				
+			case 9:
+				break;
 			}
 		}
 	}
@@ -163,6 +166,10 @@ public class AddressBookMain {
 		contact.email = email;
 	}
 
+	/**
+	 * function to input the choice of searching by city or state
+	 * @param addressBookList
+	 */
 	public static void getInput(Map<String, Set<Contact>> addressBookList) {
 		Scanner sc = new Scanner(System.in);
 		System.out.println("Enter the choice \n1.by city \n2.by state");
@@ -172,9 +179,13 @@ public class AddressBookMain {
 		else 
 			searchByState(addressBookList);
 	}
-	
+	/**
+	 * function to search and count the people in a particular city
+	 * @param addressBookList
+	 */
 	public static void searchByCity(Map<String, Set<Contact>> addressBookList) {
 		List personListByCity = new ArrayList<>();
+		long noOfPerson = 0;
 		Scanner sc = new Scanner(System.in);
 		System.out.println("Enter the city name to be searched");
 		String city = sc.nextLine();
@@ -182,14 +193,20 @@ public class AddressBookMain {
 		for (String bookname : addressBookList.keySet()) {
 			Set<Contact> contactList = addressBookList.get(bookname);
 			personListByCity = contactList.stream().filter(c -> c.city.equals(city)).collect(Collectors.toList());
+			noOfPerson = contactList.stream().filter(c -> c.city.equals(city)).count();
 		}
 		for (Object object : personListByCity) {
 			System.out.println(object);
 		}
+		System.out.println("No of person in city " + city + ": " + noOfPerson);
 	}
-
+	/**
+	 * function to search and count the people in a particular state
+	 * @param addressBookList
+	 */
 	public static void searchByState(Map<String, Set<Contact>> addressBookList) {
 		List personListByState = new ArrayList<>();
+		long noOfPerson = 0;
 		Scanner sc = new Scanner(System.in);
 		System.out.println("Enter the state name to be searched");
 		String state = sc.nextLine();
@@ -197,10 +214,12 @@ public class AddressBookMain {
 		for (String bookname : addressBookList.keySet()) {
 			Set<Contact> contactList = addressBookList.get(bookname);
 			personListByState = contactList.stream().filter(c -> c.city.equals(state)).collect(Collectors.toList());
+			noOfPerson = contactList.stream().filter(c -> c.city.equals(state)).count();
 		}
 		for (Object object : personListByState) {
 			System.out.println(object);
 		}
+		System.out.println("No of person in city " + state + ": " + noOfPerson);
 	}
 
 }
