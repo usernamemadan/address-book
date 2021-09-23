@@ -6,9 +6,12 @@ import java.util.Scanner;
 import java.util.Set;
 
 public class AddressBook {
-	/*
-	function to select or create a addressbook
-	*/
+	
+	/**
+	 * function to create or select an address book
+	 * @param addressBookList
+	 * @return contact list from selected address book list
+	 */
 	public Set<Contact> selectAddressBook(Map<String,Set<Contact>> addressBookList) {
 		System.out.println("1.Create address book \n2.Choose address book");
 		Scanner sc = new Scanner(System.in);

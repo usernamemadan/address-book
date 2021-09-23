@@ -76,17 +76,21 @@ public class AddressBookMain {
 			}
 		}
 	}
-	/*
-	function to create a new contact
-	*/
+	
+	/**
+	 * function to print all the contacts in contact list
+	 * @param contactList
+	 */
 	public static void printContacts(Set<Contact> contactList) {
 		for(Contact contact: contactList){
 			System.out.println(contact);
 		}
 	}
-	/*
-	function to create a new contact
-	*/
+	
+	/**
+	 * function to create a new contact
+	 * @param contactList
+	 */
 	public static void createContact(Set<Contact> contactList) {	
 		String firstName;
 		String LastName;
@@ -113,19 +117,20 @@ public class AddressBookMain {
 		email = sc.nextLine();
 		
 		Contact contact = new Contact();
-		contactList.forEach(c -> {
-			if(c.getFirstName().equals(firstName))
-				System.out.println("contact already exists");
-			});
-		
 		contact.addContact(firstName, LastName, city, state, zipcode, phoneNumber, email);
-		Boolean isAdded = contactList.add(contact);
-
-		
+		Long countContact = contactList.stream().filter(c -> c.equals(contact)).count();
+		if(countContact > 0) {
+			System.out.println("contact already exist");
+		}
+		else {
+			contactList.add(contact);
+		}
 	}
-	/*
-	function to edit a contact
-	*/
+	
+	/**
+	 * function to edit a contact
+	 * @param contact
+	 */
 	public static void editContact(Contact contact) {
 		String city;
 		String state;
@@ -152,4 +157,6 @@ public class AddressBookMain {
 		contact.phoneNumber = phoneNumber;
 		contact.email = email;
 	}
+	
+	
 }
