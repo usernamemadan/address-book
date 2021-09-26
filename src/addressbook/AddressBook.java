@@ -1,9 +1,9 @@
 package addressbook;
 
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
-import java.util.Set;
 
 public class AddressBook {
 	
@@ -12,7 +12,7 @@ public class AddressBook {
 	 * @param addressBookList
 	 * @return contact list from selected address book list
 	 */
-	public Set<Contact> selectAddressBook(Map<String,Set<Contact>> addressBookList) {
+	public List<Contact> selectAddressBook(Map<String, List<Contact>> addressBookList) {
 		System.out.println("1.Create address book \n2.Choose address book");
 		Scanner sc = new Scanner(System.in);
 		int choice = sc.nextInt();
@@ -21,7 +21,7 @@ public class AddressBook {
 		if(choice == 1) {
 			System.out.println("Enter the name of new address book");
 			name = sc.nextLine();
-			Set<Contact> contactList1 = new HashSet<Contact>();
+			List<Contact> contactList1 = new ArrayList<Contact>();
 			addressBookList.put(name, contactList1);
 		}
 		else if(choice == 2) {
