@@ -1,11 +1,15 @@
 package addressbook;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
+import java.util.TreeSet;
 import java.util.stream.Collectors;
 
 /*
@@ -30,7 +34,7 @@ public class AddressBookMain {
 		while (choice != 9) {
 
 			System.out.println(
-					"1 : Add Contact\n2 : Edit Contact\n3 : Delete Contact\n4 : Display Contact\n5 : Change address book \n6 : Search a person \n9 : exit");
+					"1 : Add Contact\n2 : Edit Contact\n3 : Delete Contact\n4 : Display Contact\n5 : Change address book \n6 : Search a person \n7 : sort contacts \n9 : exit");
 			Scanner sc = new Scanner(System.in);
 			choice = sc.nextInt();
 
@@ -75,6 +79,11 @@ public class AddressBookMain {
 
 			case 6:
 				getInput(addressBookList);
+				break;
+				
+			case 7:
+				sortContacts(contactList);
+				printContacts(contactList);
 				break;
 				
 			case 9:
@@ -198,7 +207,7 @@ public class AddressBookMain {
 		for (Object object : personListByCity) {
 			System.out.println(object);
 		}
-		System.out.println("No of person in city " + city + ": " + noOfPerson);
+		System.out.println("No of people in city " + city + ": " + noOfPerson);
 	}
 	/**
 	 * function to search and count the people in a particular state
@@ -219,7 +228,13 @@ public class AddressBookMain {
 		for (Object object : personListByState) {
 			System.out.println(object);
 		}
-		System.out.println("No of person in city " + state + ": " + noOfPerson);
+		System.out.println("No of people in state " + state + ": " + noOfPerson);
+	}
+	
+	public static void sortContacts(Set<Contact> contactList) {
+        TreeSet<Contact> treeSet = new TreeSet<Contact>(contactList);
+        contactList = treeSet;
+        System.out.println("Contact list is sorted");
 	}
 
 }

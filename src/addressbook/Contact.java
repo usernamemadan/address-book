@@ -5,7 +5,7 @@ import java.util.Objects;
 /*
 contact class stores the contact information of a person
 */
-public class Contact {
+public class Contact implements Comparable<Contact>{
 	String firstName;
 	String LastName;
 	String city;
@@ -46,7 +46,7 @@ public class Contact {
 		return "Contact [firstName=" + firstName + ", LastName=" + LastName + ", city=" + city + ", state=" + state
 				+ ", zipcode=" + zipcode + ", phoneNumber=" + phoneNumber + ", email=" + email + "]";
 	}
-	
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(LastName, city, email, firstName, phoneNumber, state, zipcode);
@@ -66,6 +66,10 @@ public class Contact {
 				&& Objects.equals(phoneNumber, other.phoneNumber) && Objects.equals(state, other.state)
 				&& Objects.equals(zipcode, other.zipcode);
 	}
-	
 
+	@Override
+	public int compareTo(Contact o) {
+		return (this.firstName + this.LastName).compareTo(o.getFirstName() + o.getLastName());
+	}
+	
 }
