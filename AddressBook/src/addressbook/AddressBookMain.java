@@ -1,5 +1,6 @@
 package addressbook;
 
+import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -12,6 +13,9 @@ import java.util.Map;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
+import com.opencsv.CSVReader;
+import com.opencsv.CSVWriter;
+
 /*
  AddressBookMain class manages selecting addressbook
  and modifies the contacts
@@ -20,7 +24,7 @@ import java.util.stream.Collectors;
 public class AddressBookMain {
 	static Map<String, List<Contact>> stateMap = new HashMap<String, List<Contact>>();
 	static Map<String, List<Contact>> cityMap = new HashMap<String, List<Contact>>();
-	final static String PATH = "/Users/madanar/eclipse-workspace/YML training/employee.java/AddressBook/data/storeContacts";
+	final static String PATH = "/Users/madanar/eclipse-workspace/YML training/employee.java/AddressBook/data/";
 
 	public static void main(String[] args) {
 		System.out.println("welcome to address book program");
@@ -40,7 +44,7 @@ public class AddressBookMain {
 					"1 : Add Contact\n2 : Edit Contact\n3 : Delete Contact\n4 : Display Contact\n"
 					+ "5 : Change address book \n6 : Search a person \n7 : sort contacts \n"
 					+ "8 : sort contacts by state/city/zip \n9 : save contacts to the file \n10 : read contacts from the file \n"
-					+ "13 : exit");
+					+ "11 : write to a csv file \n12: read from a csv file \n13 : exit");
 			Scanner sc = new Scanner(System.in);
 			choice = sc.nextInt();
 
@@ -105,11 +109,14 @@ public class AddressBookMain {
 				break;
 				
 			case 11:
+				writeToCSV(contactList);
 				break;
 				
 			case 12:
+				readFromCSV();
 				break;
-				
+			case 13:
+				break;
 			}
 		}
 	}
@@ -389,7 +396,7 @@ public class AddressBookMain {
 	public static void writeTofile(List<Contact> contactList)
 	{
 		try {
-		      FileWriter myWriter = new FileWriter(PATH);
+		      FileWriter myWriter = new FileWriter(PATH + "storeContacts");
 		      for (Contact contact : contactList) {
 				myWriter.write(contact.toString() + "\n");
 			}
@@ -406,7 +413,7 @@ public class AddressBookMain {
 	 */
 	public static void readFromFile() {
         try {
-        	FileReader fileReader = new FileReader(PATH);
+        	FileReader fileReader = new FileReader(PATH + "storeContacts");
         	int i;    
             while((i = fileReader.read()) != -1) {
                System.out.print((char)i); 
@@ -414,6 +421,47 @@ public class AddressBookMain {
         } catch (IOException e) {
 			e.printStackTrace();
 		} 
+	}
+	
+	public static void writeToCSV(List<Contact> contactList) {
+		 File file = new File(PATH + "contacts.csv");
+		    try {
+		        FileWriter outputfile = new FileWriter(file);
+		        CSVWriter writer = new CSVWriter(outputfile);
+		  
+		        String[] header = { "FirstName", "LastName", "city", "state", "zipcode", "phoneNumber", "email" };
+		        writer.writeNext(header);
+		  
+		        for (Contact contact : contactList) {
+		        	String[] data = { contact.firstName, contact.LastName, contact.city, contact.state,
+		        			contact.zipcode, contact.phoneNumber, contact.email };
+		        	 writer.writeNext(data);
+				}
+		        writer.close();
+		    }
+		    catch (IOException e) {
+		        // TODO Auto-generated catch block
+		        e.printStackTrace();
+		    }
+	}
+	
+	public static void readFromCSV() {
+		try {
+	        FileReader filereader = new FileReader(PATH + "contacts.csv");
+	 
+	        CSVReader csvReader = new CSVReader(filereader);
+	        String[] nextRecord;
+	 
+	        while ((nextRecord = csvReader.readNext()) != null) {
+	            for (String cell : nextRecord) {
+	                System.out.print(cell + "\t");
+	            }
+	            System.out.println();
+	        }
+	    }
+	    catch (Exception e) {
+	        e.printStackTrace();
+	    }
 	}
 
 }
