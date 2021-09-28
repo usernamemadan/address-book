@@ -1,11 +1,12 @@
 package addressbook;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 /*
 contact class stores the contact information of a person
 */
-public class Contact implements Comparable<Contact>{
+public class Contact implements Comparable<Contact> {
 	String firstName;
 	String LastName;
 	String city;

@@ -1,16 +1,15 @@
 package addressbook;
 
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
-import java.util.Set;
-import java.util.TreeSet;
 import java.util.stream.Collectors;
 
 /*
@@ -21,6 +20,7 @@ import java.util.stream.Collectors;
 public class AddressBookMain {
 	static Map<String, List<Contact>> stateMap = new HashMap<String, List<Contact>>();
 	static Map<String, List<Contact>> cityMap = new HashMap<String, List<Contact>>();
+	final static String PATH = "/Users/madanar/eclipse-workspace/YML training/employee.java/AddressBook/data/storeContacts";
 
 	public static void main(String[] args) {
 		System.out.println("welcome to address book program");
@@ -34,10 +34,13 @@ public class AddressBookMain {
 		} while (contactList == null);
 
 		int choice = 0;
-		while (choice != 9) {
+		while (choice != 13) {
 
 			System.out.println(
-					"1 : Add Contact\n2 : Edit Contact\n3 : Delete Contact\n4 : Display Contact\n5 : Change address book \n6 : Search a person \n7 : sort contacts \n8 : sort contacts by state/city/zip \n9 : exit");
+					"1 : Add Contact\n2 : Edit Contact\n3 : Delete Contact\n4 : Display Contact\n"
+					+ "5 : Change address book \n6 : Search a person \n7 : sort contacts \n"
+					+ "8 : sort contacts by state/city/zip \n9 : save contacts to the file \n10 : read contacts from the file \n"
+					+ "13 : exit");
 			Scanner sc = new Scanner(System.in);
 			choice = sc.nextInt();
 
@@ -94,7 +97,19 @@ public class AddressBookMain {
 				break;
 
 			case 9:
+				writeTofile(contactList);
 				break;
+
+			case 10:
+				readFromFile();
+				break;
+				
+			case 11:
+				break;
+				
+			case 12:
+				break;
+				
 			}
 		}
 	}
@@ -242,9 +257,13 @@ public class AddressBookMain {
 		}
 		System.out.println("No of people in state " + state + ": " + noOfPerson);
 	}
-
+	
+	/**
+	 * store the person name and city in hashmap
+	 * also store the person name and state in hashmap
+	 * @param addressBookList
+	 */
 	public static void veiwBy(Map<String, List<Contact>> addressBookList) {
-
 		System.out.println("View contacts by\n1.City\n2.State");
 		Scanner sc = new Scanner(System.in);
 		int choice = sc.nextInt();
@@ -289,7 +308,10 @@ public class AddressBookMain {
 
 		}
 	}
-
+	/**
+	 * prints the Hashmap of citymap and statemap
+	 * @param map
+	 */
 	public static void printView(Map<String, List<Contact>> map) {
 		for (Map.Entry<String, List<Contact>> e : map.entrySet()) {
 			for (Contact contact : e.getValue()) {
@@ -300,17 +322,25 @@ public class AddressBookMain {
 		}
 	}
 
+	/**
+	 * Sort the contacts according to person's name
+	 * @param contactList
+	 */
 	public static void sortContacts(List<Contact> contactList) {
 		Collections.sort(contactList);
 		System.out.println("Contact list is sorted");
 	}
-	
+
+	/**
+	 * method to call the sort methods according to city, state and zip code
+	 * @param contactList
+	 */
 	public static void sortBy(List<Contact> contactList) {
 		System.out.println("Sort contacts by\n1.City \n2.State \n3.zip code");
 		Scanner sc = new Scanner(System.in);
 		int choice = sc.nextInt();
 		switch (choice) {
-		case 1: 
+		case 1:
 			sortContactsByCity(contactList);
 			break;
 		case 2:
@@ -322,22 +352,68 @@ public class AddressBookMain {
 		}
 	}
 
+	/**
+	 * sort contacts according to state
+	 * @param contactList
+	 */
 	public static void sortContactsByState(List<Contact> contactList) {
 		Collections.sort(contactList, Comparator.comparing((Contact c) -> c.state));
 		System.out.println("Contact list is sorted by state");
 		System.out.println(contactList);
 	}
 
+	/**
+	 * sort contacts according to city
+	 * @param contactList
+	 */
 	public static void sortContactsByCity(List<Contact> contactList) {
 		Collections.sort(contactList, Comparator.comparing((Contact c) -> c.city));
 		System.out.println("Contact list is sorted by city");
 		System.out.println(contactList);
 	}
 
+	/**
+	 * sort contacts according to zip code
+	 * @param contactList
+	 */
 	public static void sortContactsByZip(List<Contact> contactList) {
 		Collections.sort(contactList, Comparator.comparing((Contact c) -> c.zipcode));
 		System.out.println("Contact list is sorted by zip code");
 		System.out.println(contactList);
+	}
+	
+	/**
+	 * writes the contact list to the file
+	 * @param contactList
+	 */
+	public static void writeTofile(List<Contact> contactList)
+	{
+		try {
+		      FileWriter myWriter = new FileWriter(PATH);
+		      for (Contact contact : contactList) {
+				myWriter.write(contact.toString() + "\n");
+			}
+		      myWriter.close();
+		      System.out.println("Successfully wrote to the file.");
+		    } catch (IOException e) {
+		      System.out.println("An error occurred.");
+		      e.printStackTrace();
+		    }
+	}
+	
+	/**
+	 * reads the contact list from the file and prints it
+	 */
+	public static void readFromFile() {
+        try {
+        	FileReader fileReader = new FileReader(PATH);
+        	int i;    
+            while((i = fileReader.read()) != -1) {
+               System.out.print((char)i); 
+            }
+        } catch (IOException e) {
+			e.printStackTrace();
+		} 
 	}
 
 }
